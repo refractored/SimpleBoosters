@@ -1,48 +1,14 @@
 package net.refractored.SimpleBoosters.booster
 
 import java.time.Duration
-import java.util.UUID
+import java.util.*
 
-object ActiveBoosters {
-    @JvmStatic
-    private val registeredBoosters = mutableListOf<Booster>()
-
-    @JvmStatic
-    fun getBooster(booster: Booster): Booster? = registeredBoosters.firstOrNull { it == booster }
-
-    /**
-     * Register a booster.
-     */
-    @JvmStatic
-    fun registerBooster(
-        booster: Booster,
-        time: Long,
-    ) {
-        if (getBooster(booster) != null) throw IllegalArgumentException("Booster already registered")
-        registeredBoosters.add(booster)
-    }
-
-    /**
-     * Unregister a booster.
-     */
-    @JvmStatic
-    fun unregisterBooster(booster: Booster) {
-        registeredBoosters.remove(booster)
-    }
-
-    @JvmStatic
-    fun getActiveBoosters() = registeredBoosters.filter { it.active != null }
-
-    @JvmStatic
-    fun updateStatus() {
-        for (booster in registeredBoosters) {
-            val activatedBooster = booster.active ?: continue
-            if (activatedBooster.expireTime > System.currentTimeMillis()) continue
-            booster.deactivateBooster()
-        }
-    }
-}
-
+/**
+ * Represents an active booster.
+ * @param booster The booster.
+ * @param expireTime The time the booster expires.
+ * @param uuid The UUID of the booster.
+ */
 data class ActiveBooster(
     val booster: Booster,
     var expireTime: Long,
@@ -55,7 +21,7 @@ data class ActiveBooster(
     fun getRemainingDuration() = Duration.ofMillis(getRemainingMiliseconds())
 
     /**
-     * Update the expire time.
+     * Update the expiry time.
      */
     fun updateExpireTime(time: Duration) {
         expireTime = System.currentTimeMillis() + time.toMillis()

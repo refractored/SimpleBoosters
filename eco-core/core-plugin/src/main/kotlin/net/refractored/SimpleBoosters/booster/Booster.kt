@@ -10,6 +10,12 @@ import org.bukkit.NamespacedKey
 import java.time.Duration
 import java.util.*
 
+/**
+ * Represents a booster.
+ * @param stringID The string ID of the booster.
+ * @param config The config of the booster.
+ * @property active The active booster.
+ */
 class Booster(
     stringID: String,
     config: Config,

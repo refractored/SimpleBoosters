@@ -1,6 +1,5 @@
-messages:
-  prefix: "&a&lPlugin &f» "
-  no-permission: "&cYou don't have permission to do this!"
-  not-player: "&cThis command must be run by a player"
-  invalid-command: "&cUnknown subcommand!"
-  reloaded: "Reloaded!"
+command:
+  no-permission: "<red>You don't have permission to do this!"
+  not-player: "<red>This command must be run by a player"
+  invalid-command: "<red>Unknown subcommand!"
+  reloaded: "<green>Reloaded!"
