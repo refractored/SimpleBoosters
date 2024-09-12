@@ -2,8 +2,8 @@ plugins {
     java
     `java-library`
     `maven-publish`
-    kotlin("jvm") version "1.7.10"
-    id("com.github.johnrengelman.shadow") version "8.0.0"
+    kotlin("jvm") version "2.0.20"
+    id("io.github.goooler.shadow") version "8.1.8"
     id("com.willfp.libreforge-gradle-plugin") version "1.0.0"
 }
 
@@ -25,7 +25,7 @@ allprojects {
     apply(plugin = "java")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
-    apply(plugin = "com.github.johnrengelman.shadow")
+    apply(plugin = "io.github.goooler.shadow")
 
     repositories {
         mavenLocal()
@@ -44,7 +44,7 @@ allprojects {
         compileOnly("net.kyori:adventure-platform-bukkit:4.1.2")
         implementation("net.kyori:adventure-text-minimessage:4.16.0")
 
-        compileOnly("com.willfp:eco:6.53.0")
+        compileOnly("com.willfp:eco:6.74.1")
         compileOnly("org.jetbrains:annotations:23.0.0")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
     }
@@ -56,14 +56,14 @@ allprojects {
 
     tasks {
         shadowJar {
-            relocate("com.willfp.libreforge.loader", "com.willfp.SimpleBoosters.libreforge.loader")
+            relocate("com.willfp.libreforge.loader", "net.refractored.SimpleBoosters.libreforge.loader")
         }
 
-        compileKotlin {
-            kotlinOptions {
-                jvmTarget = "17"
-            }
-        }
+//        compileKotlin {
+//            kotlinOptions {
+//                jvmTarget = "17"
+//            }
+//        }
 
         compileJava {
             options.isDeprecation = true

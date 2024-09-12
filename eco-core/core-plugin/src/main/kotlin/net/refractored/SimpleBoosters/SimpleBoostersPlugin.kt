@@ -8,13 +8,14 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
     lateinit var handler: BukkitCommandHandler
 
     override fun handleEnable() {
+        instance = this
+
         handler = BukkitCommandHandler.create(this)
 
         handler.register(ReloadCommand())
 
         handler.registerBrigadier()
 
-        instance = this
     }
 
     override fun handleDisable() {

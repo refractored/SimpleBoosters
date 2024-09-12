@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "libreforge-template"
+rootProject.name = "SimpleBoosters"
 
 // Core
 include(":eco-core")
