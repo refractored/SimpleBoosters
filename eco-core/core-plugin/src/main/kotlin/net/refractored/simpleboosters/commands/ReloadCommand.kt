@@ -1,7 +1,7 @@
-package net.refractored.SimpleBoosters.commands
+package net.refractored.simpleboosters.commands
 
-import com.willfp.eco.util.toComponent
-import net.refractored.SimpleBoosters.SimpleBoostersPlugin
+import net.refractored.simpleboosters.SimpleBoostersPlugin
+import net.refractored.simpleboosters.util.MessageUtil.fromMinimessage
 import revxrsal.commands.annotation.Command
 import revxrsal.commands.annotation.Description
 import revxrsal.commands.bukkit.BukkitCommandActor
@@ -12,11 +12,11 @@ class ReloadCommand {
     @Description("Reloads plugin configuration")
     @Command("simpleboosters reload")
     fun execute(actor: BukkitCommandActor) {
-        SimpleBoostersPlugin.instance.reload()
+        SimpleBoostersPlugin.instance.reloadWithTime()
         actor.reply(
             SimpleBoostersPlugin.instance.langYml
-                .getMessage("command.reloaded")
-                .toComponent(),
+                .getString("messages.reloaded")
+                .fromMinimessage(),
         )
     }
 }

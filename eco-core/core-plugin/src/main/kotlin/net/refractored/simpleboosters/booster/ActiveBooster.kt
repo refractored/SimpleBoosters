@@ -1,4 +1,4 @@
-package net.refractored.SimpleBoosters.booster
+package net.refractored.simpleboosters.booster
 
 import java.time.Duration
 import java.util.*

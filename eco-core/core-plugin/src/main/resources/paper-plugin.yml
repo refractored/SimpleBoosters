@@ -1,6 +1,8 @@
 name: ${pluginName}
 version: ${version}
-main: net.refractored.SimpleBoosters.SimpleBoostersPlugin
+main: net.refractored.simpleboosters.SimpleBoostersPlugin
+authors:
+  - refractored
 api-version: 1.19
 
 dependencies:

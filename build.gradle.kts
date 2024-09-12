@@ -46,7 +46,7 @@ allprojects {
 
         compileOnly("com.willfp:eco:6.74.1")
         compileOnly("org.jetbrains:annotations:23.0.0")
-        compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
+        compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
     }
 
     java {
@@ -56,7 +56,7 @@ allprojects {
 
     tasks {
         shadowJar {
-            relocate("com.willfp.libreforge.loader", "net.refractored.SimpleBoosters.libreforge.loader")
+            relocate("com.willfp.libreforge.loader", "net.refractored.simpleboosters.libreforge.loader")
         }
 
 //        compileKotlin {

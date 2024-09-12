@@ -1,4 +1,4 @@
-package net.refractored.SimpleBoosters.booster
+package net.refractored.simpleboosters.booster
 
 object RegisteredBoosters {
     /**
@@ -10,9 +10,11 @@ object RegisteredBoosters {
     @JvmStatic
     fun getBooster(booster: Booster): Booster? = registeredBoosters.firstOrNull { it == booster }
 
-    /**
-     * Register a booster.
-     */
+    @JvmStatic
+    fun unregisterAllBoosters() {
+        registeredBoosters.clear()
+    }
+
     @JvmStatic
     fun registerBooster(
         booster: Booster,
@@ -22,9 +24,6 @@ object RegisteredBoosters {
         registeredBoosters.add(booster)
     }
 
-    /**
-     * Unregister a booster.
-     */
     @JvmStatic
     fun unregisterBooster(booster: Booster) {
         registeredBoosters.remove(booster)

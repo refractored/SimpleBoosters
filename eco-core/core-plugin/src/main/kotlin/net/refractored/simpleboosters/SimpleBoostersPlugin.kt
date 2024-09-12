@@ -1,7 +1,7 @@
-package net.refractored.SimpleBoosters
+package net.refractored.simpleboosters
 
 import com.willfp.libreforge.loader.LibreforgePlugin
-import net.refractored.SimpleBoosters.commands.*
+import net.refractored.simpleboosters.commands.*
 import revxrsal.commands.bukkit.BukkitCommandHandler
 
 class SimpleBoostersPlugin : LibreforgePlugin() {
@@ -15,7 +15,6 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
         handler.register(ReloadCommand())
 
         handler.registerBrigadier()
-
     }
 
     override fun handleDisable() {

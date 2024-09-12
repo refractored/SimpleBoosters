@@ -1,11 +1,11 @@
-package net.refractored.SimpleBoosters.booster
+package net.refractored.simpleboosters.booster
 
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.libreforge.Holder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.effects.Effects
-import net.refractored.SimpleBoosters.SimpleBoostersPlugin
+import net.refractored.simpleboosters.SimpleBoostersPlugin
 import org.bukkit.NamespacedKey
 import java.time.Duration
 import java.util.*
