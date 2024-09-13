@@ -12,7 +12,7 @@ object MessageUtil {
     /**
      * Converts this string to a component using minimessage.
      */
-    fun String.fromMinimessage(): Component = MiniMessage.miniMessage().deserialize(this)
+    fun String.miniToComponent(): Component = MiniMessage.miniMessage().deserialize(this)
 
     /**
      * Returns a new string obtained by replacing all occurrences of the [oldValue] substring in this string
@@ -22,7 +22,5 @@ object MessageUtil {
         oldValue: String,
         newValue: Component,
         ignoreCase: Boolean = false,
-    ) {
-        this.replace(oldValue, newValue.toMinimessage(), ignoreCase)
-    }
+    ): String = this.replace(oldValue, newValue.toMinimessage(), ignoreCase)
 }

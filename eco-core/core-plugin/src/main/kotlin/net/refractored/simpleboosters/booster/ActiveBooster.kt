@@ -7,35 +7,47 @@ import java.util.*
  * Represents an active booster.
  * This class is used to store and manage an active booster.
  * @param booster The booster.
- * @param expireTime The time the booster expires.
+ * @param length The time the booster expires.
  * @param uuid The UUID of the booster.
  */
 data class ActiveBooster(
     val booster: Booster,
-    var expireTime: Long,
+    /**
+     * The length in milliseconds of the booster.
+     */
+    var length: Long,
     val uuid: UUID,
 ) {
-    fun isExpired() = System.currentTimeMillis() > expireTime
+    /**
+     * The expiry time of the booster.
+     */
+    val expiryTime = System.currentTimeMillis() + length
 
-    fun getRemainingMiliseconds() = expireTime - System.currentTimeMillis()
+    fun isExpired() = expiryTime <= System.currentTimeMillis()
 
-    fun getRemainingDuration() = Duration.ofMillis(getRemainingMiliseconds())
+    fun getRemainingMillis(): Long = expiryTime - System.currentTimeMillis()
+
+    fun getRemainingDuration(): Duration = Duration.ofMillis(getRemainingMillis())
+
+    init {
+        booster.SavedExpireTime = length.toDouble()
+    }
 
     /**
      * Update the expiry time.
      */
     fun updateExpireTime(time: Duration) {
-        expireTime = System.currentTimeMillis() + time.toMillis()
-        booster.SavedExpireTime = expireTime.toDouble()
+        length = time.toMillis()
+        booster.SavedExpireTime = time.toMillis().toDouble()
     }
 
-    fun addExpireTIme(time: Duration) {
-        expireTime += time.toMillis()
-        booster.SavedExpireTime = expireTime.toDouble()
+    fun addExpireTime(time: Duration) {
+        length += time.toMillis()
+        booster.SavedExpireTime = length.toDouble()
     }
 
-    fun subtractExpireTIme(time: Duration) {
-        expireTime -= time.toMillis()
-        booster.SavedExpireTime = expireTime.toDouble()
+    fun subtractExpireTime(time: Duration) {
+        length -= time.toMillis()
+        booster.SavedExpireTime = length.toDouble()
     }
 }

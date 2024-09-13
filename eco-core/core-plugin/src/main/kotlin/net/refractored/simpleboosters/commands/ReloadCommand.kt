@@ -1,7 +1,7 @@
 package net.refractored.simpleboosters.commands
 
 import net.refractored.simpleboosters.SimpleBoostersPlugin
-import net.refractored.simpleboosters.util.MessageUtil.fromMinimessage
+import net.refractored.simpleboosters.util.MessageUtil.miniToComponent
 import revxrsal.commands.annotation.Command
 import revxrsal.commands.annotation.Description
 import revxrsal.commands.bukkit.BukkitCommandActor
@@ -16,7 +16,7 @@ class ReloadCommand {
         actor.reply(
             SimpleBoostersPlugin.instance.langYml
                 .getString("messages.reloaded")
-                .fromMinimessage(),
+                .miniToComponent(),
         )
     }
 }

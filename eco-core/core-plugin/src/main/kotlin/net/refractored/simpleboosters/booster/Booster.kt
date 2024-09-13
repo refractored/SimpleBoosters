@@ -9,6 +9,7 @@ import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.effects.Effects
 import net.refractored.simpleboosters.SimpleBoostersPlugin
+import net.refractored.simpleboosters.util.MessageUtil.miniToComponent
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import java.time.Duration
@@ -28,7 +29,7 @@ class Booster(
 
     val expiryTimeKey =
         PersistentDataKey(
-            SimpleBoostersPlugin.instance.namespacedKeyFactory.create("${id.namespace}_expiry_time"),
+            SimpleBoostersPlugin.instance.namespacedKeyFactory.create("${id.key}_expiry_time"),
             PersistentDataKeyType.DOUBLE,
             0.0,
         )
@@ -46,7 +47,7 @@ class Booster(
             ViolationContext(SimpleBoostersPlugin.instance, "Booster $stringID"),
         )
 
-    val name = config.getFormattedString("name")
+    val name = config.getString("name").miniToComponent()
 
     /**
      * The duration of the booster, from the config.
@@ -66,11 +67,7 @@ class Booster(
      * @param time The duration of how long the booster should be. If not specified, it will use the default time.
      */
     fun activateBooster(time: Duration = duration) {
-        if (SavedExpireTime != 0.0) {
-            active = ActiveBooster(this, SavedExpireTime.toLong(), UUID.randomUUID())
-            return
-        }
-        active = ActiveBooster(this, (System.currentTimeMillis() + time.toMillis()), UUID.randomUUID())
+        active = ActiveBooster(this, (time.toMillis()), UUID.randomUUID())
     }
 
     fun deactivateBooster() {

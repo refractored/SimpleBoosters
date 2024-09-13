@@ -3,6 +3,8 @@ package net.refractored.simpleboosters.booster
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
+import java.time.Duration
+import java.util.*
 
 object RegisteredBoosters : ConfigCategory("booster", "boosters") {
     /**
@@ -13,6 +15,9 @@ object RegisteredBoosters : ConfigCategory("booster", "boosters") {
 
     @JvmStatic
     fun getBooster(booster: Booster): Booster? = registeredBoosters.firstOrNull { it == booster }
+
+    @JvmStatic
+    fun getBoosters() = registeredBoosters.toList()
 
     @JvmStatic
     fun unregisterAllBoosters() {
@@ -37,7 +42,7 @@ object RegisteredBoosters : ConfigCategory("booster", "boosters") {
     fun getBoosterById(id: String): Booster? = registeredBoosters.firstOrNull { it.id.key == id }
 
     @JvmStatic
-    fun getActiveBoosters() = registeredBoosters.filter { it.active != null }
+    fun getActiveBoosters() = registeredBoosters.filter { it.isActive() }
 
     @JvmStatic
     fun updateStatus() {
@@ -57,6 +62,10 @@ object RegisteredBoosters : ConfigCategory("booster", "boosters") {
         id: String,
         config: Config,
     ) {
-        registeredBoosters.add(Booster(id, config))
+        val booster = Booster(id, config)
+        registeredBoosters.add(booster)
+        if (booster.SavedExpireTime != 0.0) {
+            booster.activateBooster(Duration.ofMillis(booster.SavedExpireTime.toLong()))
+        }
     }
 }
