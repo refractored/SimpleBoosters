@@ -1,5 +1,6 @@
 package net.refractored.simpleboosters.util
 
+import com.willfp.eco.core.config.base.LangYml
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 
@@ -23,4 +24,9 @@ object MessageUtil {
         newValue: Component,
         ignoreCase: Boolean = false,
     ): String = this.replace(oldValue, newValue.toMinimessage(), ignoreCase)
+
+    /**
+     * Gets a string from the lang.yml and adds a prefix.
+     */
+    fun LangYml.getStringPrefixed(key: String): String = this.getString("messages.prefix") + this.getString(key)
 }

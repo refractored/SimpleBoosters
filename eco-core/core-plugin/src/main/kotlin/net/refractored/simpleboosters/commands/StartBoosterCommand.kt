@@ -2,6 +2,7 @@ package net.refractored.simpleboosters.commands
 
 import net.refractored.simpleboosters.SimpleBoostersPlugin
 import net.refractored.simpleboosters.booster.Booster
+import net.refractored.simpleboosters.util.MessageUtil.getStringPrefixed
 import net.refractored.simpleboosters.util.MessageUtil.miniToComponent
 import net.refractored.simpleboosters.util.MessageUtil.replace
 import revxrsal.commands.annotation.Command
@@ -20,7 +21,7 @@ class StartBoosterCommand {
         if (booster.active != null) {
             actor.reply(
                 SimpleBoostersPlugin.instance.langYml
-                    .getString("messages.already-active")
+                    .getStringPrefixed("messages.already-active")
                     .replace("%booster%", booster.name)
                     .miniToComponent(),
             )
@@ -29,7 +30,7 @@ class StartBoosterCommand {
         booster.activateBooster()
         actor.reply(
             SimpleBoostersPlugin.instance.langYml
-                .getString("messages.started-booster")
+                .getStringPrefixed("messages.started-booster")
                 .replace("%booster%", booster.name)
                 .miniToComponent(),
         )

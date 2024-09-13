@@ -9,6 +9,7 @@ import net.refractored.simpleboosters.autocompletion.BoosterResolver
 import net.refractored.simpleboosters.booster.Booster
 import net.refractored.simpleboosters.booster.RegisteredBoosters
 import net.refractored.simpleboosters.commands.*
+import net.refractored.simpleboosters.exceptions.CommandErrorHandler
 import net.refractored.simpleboosters.libreforge.IsBoosterActive
 import revxrsal.commands.bukkit.BukkitCommandHandler
 
@@ -24,6 +25,8 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
         instance = this
 
         handler = BukkitCommandHandler.create(this)
+
+        handler.setExceptionHandler(CommandErrorHandler())
 
         val boosterResolver = BoosterResolver()
 

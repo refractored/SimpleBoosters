@@ -4,6 +4,7 @@ import net.refractored.simpleboosters.SimpleBoostersPlugin
 import net.refractored.simpleboosters.booster.Booster
 import net.refractored.simpleboosters.booster.RegisteredBoosters
 import net.refractored.simpleboosters.exceptions.CommandErrorException
+import net.refractored.simpleboosters.util.MessageUtil.getStringPrefixed
 import net.refractored.simpleboosters.util.MessageUtil.miniToComponent
 import revxrsal.commands.autocomplete.SuggestionProvider
 import revxrsal.commands.command.CommandActor
@@ -18,7 +19,7 @@ class BoosterResolver :
         return RegisteredBoosters.getBoosterById(boosterTag) ?: run {
             throw CommandErrorException(
                 SimpleBoostersPlugin.instance.langYml
-                    .getString(
+                    .getStringPrefixed(
                         "messages.invalid-booster",
                     ).replace("%arg%", boosterTag)
                     .miniToComponent(),

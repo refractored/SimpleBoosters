@@ -1,3 +1,6 @@
 #
 # SimpleBoosters
 #
+
+# If the plugin should use local storage for boosters, instead of eco's.
+use-local-storage: false
