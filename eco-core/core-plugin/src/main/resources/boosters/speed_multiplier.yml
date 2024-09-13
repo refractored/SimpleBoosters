@@ -1,0 +1,18 @@
+name: "<blue>2.0x Speed Multiplier"
+# Duration in seconds.
+duration: 3600
+# This plugin uses Auxilor's effect system.
+# https://plugins.auxilor.io/effects/configuring-an-effect
+effects:
+  - id: movement_speed_multiplier
+    args:
+      multiplier: 2.0
+conditions: [ ]
+messages:
+  activation: "%booster_name% <reset>has been activated!"
+  deactivation: "%booster_name% <reset>has expired!"
+# What commands to run on activation or deactivation.
+# Do not add a "/" in front of the command.
+commands:
+  activation: [ ]
+  expiry: [ ]

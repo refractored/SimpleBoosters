@@ -37,12 +37,6 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
 
         handler.registerBrigadier()
 
-//        val balls =
-//            scheduler.runTimer(5L, 10L) {
-//
-//                RegisteredBoosters.scanBoosters()
-//            }
-
         Conditions.register(IsBoosterActive)
 
         registerGenericHolderProvider {

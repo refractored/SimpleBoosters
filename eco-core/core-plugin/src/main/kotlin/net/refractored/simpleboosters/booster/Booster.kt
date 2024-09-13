@@ -10,6 +10,7 @@ import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.effects.Effects
 import net.refractored.simpleboosters.SimpleBoostersPlugin
 import net.refractored.simpleboosters.util.MessageUtil.miniToComponent
+import net.refractored.simpleboosters.util.MessageUtil.replace
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import java.time.Duration
@@ -22,8 +23,8 @@ import java.util.*
  * @property active The active booster.
  */
 class Booster(
-    stringID: String,
-    config: Config,
+    var stringID: String,
+    var config: Config,
 ) : Holder {
     override val id: NamespacedKey = SimpleBoostersPlugin.instance.createNamespacedKey(stringID)
 
@@ -67,11 +68,23 @@ class Booster(
      * @param time The duration of how long the booster should be. If not specified, it will use the default time.
      */
     fun activateBooster(time: Duration = duration) {
+        Bukkit.broadcast(
+            config.getString("messages.activation").replace("%booster_name%", name).miniToComponent(),
+        )
+        for (commandString in config.getStrings("commands.activate")) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), commandString)
+        }
         active = ActiveBooster(this, (time.toMillis()), UUID.randomUUID())
     }
 
     fun deactivateBooster() {
         active ?: throw IllegalStateException("Booster is not active.")
+        Bukkit.broadcast(
+            config.getString("messages.deactivation").replace("%booster_name%", name).miniToComponent(),
+        )
+        for (commandString in config.getStrings("commands.deactivate")) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), commandString)
+        }
         SavedExpireTime = 0.0
         active = null
     }

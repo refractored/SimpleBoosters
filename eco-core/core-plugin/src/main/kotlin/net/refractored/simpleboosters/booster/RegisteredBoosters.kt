@@ -41,8 +41,8 @@ object RegisteredBoosters : ConfigCategory("booster", "boosters") {
     /**
      * Scan boosters for expiry, and deactivate them if they are expired.
      */
-    fun scanBoosters()  {
-        for (booster in RegisteredBoosters.getActiveBoosters()) {
+    fun scanBoosters() {
+        for (booster in getActiveBoosters()) {
             val activeBooster = booster.active ?: continue
             if (activeBooster.isExpired()) {
                 booster.deactivateBooster()
