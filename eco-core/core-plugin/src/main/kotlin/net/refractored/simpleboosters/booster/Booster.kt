@@ -1,11 +1,15 @@
 package net.refractored.simpleboosters.booster
 
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.data.keys.PersistentDataKey
+import com.willfp.eco.core.data.keys.PersistentDataKeyType
+import com.willfp.eco.core.data.profile
 import com.willfp.libreforge.Holder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.effects.Effects
 import net.refractored.simpleboosters.SimpleBoostersPlugin
+import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import java.time.Duration
 import java.util.*
@@ -20,6 +24,19 @@ class Booster(
     stringID: String,
     config: Config,
 ) : Holder {
+    override val id: NamespacedKey = SimpleBoostersPlugin.instance.createNamespacedKey(stringID)
+
+    val expiryTimeKey =
+        PersistentDataKey(
+            SimpleBoostersPlugin.instance.namespacedKeyFactory.create("${id.namespace}_expiry_time"),
+            PersistentDataKeyType.DOUBLE,
+            0.0,
+        )
+
+    var SavedExpireTime: Double
+        get() = Bukkit.getServer().profile.read(expiryTimeKey)
+        set(value) = Bukkit.getServer().profile.write(expiryTimeKey, value)
+
     var active: ActiveBooster? = null
         private set
 
@@ -31,7 +48,12 @@ class Booster(
 
     val name = config.getFormattedString("name")
 
-    val duration = Duration.ofSeconds(config.getInt("duration").toLong())
+    /**
+     * The duration of the booster, from the config.
+     * This is used when the booster is activated without a time.
+     * @see activateBooster
+     */
+    val duration: Duration = Duration.ofSeconds(config.getInt("duration").toLong())
 
     override val effects =
         Effects.compile(
@@ -39,18 +61,22 @@ class Booster(
             ViolationContext(SimpleBoostersPlugin.instance, "Booster $stringID"),
         )
 
-    override val id: NamespacedKey = SimpleBoostersPlugin.instance.createNamespacedKey(stringID)
-
     /**
      * Activate the booster.
      * @param time The duration of how long the booster should be. If not specified, it will use the default time.
      */
     fun activateBooster(time: Duration = duration) {
+        if (SavedExpireTime != 0.0) {
+            active = ActiveBooster(this, SavedExpireTime.toLong(), UUID.randomUUID())
+            return
+        }
         active = ActiveBooster(this, (System.currentTimeMillis() + time.toMillis()), UUID.randomUUID())
     }
 
     fun deactivateBooster() {
         active ?: throw IllegalStateException("Booster is not active.")
+        SavedExpireTime = 0.0
+        active = null
     }
 
     fun isActive() = active != null

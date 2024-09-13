@@ -8,7 +8,7 @@ import revxrsal.commands.bukkit.BukkitCommandActor
 import revxrsal.commands.bukkit.annotation.CommandPermission
 
 class ReloadCommand {
-    @CommandPermission("joblistings.admin.reload")
+    @CommandPermission("simpleboosters.admin.reload")
     @Description("Reloads plugin configuration")
     @Command("simpleboosters reload")
     fun execute(actor: BukkitCommandActor) {

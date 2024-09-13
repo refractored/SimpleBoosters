@@ -1,6 +1,10 @@
 package net.refractored.simpleboosters.booster
 
-object RegisteredBoosters {
+import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.libreforge.loader.LibreforgePlugin
+import com.willfp.libreforge.loader.configs.ConfigCategory
+
+object RegisteredBoosters : ConfigCategory("booster", "boosters") {
     /**
      * List of registered boosters.
      */
@@ -30,6 +34,9 @@ object RegisteredBoosters {
     }
 
     @JvmStatic
+    fun getBoosterById(id: String): Booster? = registeredBoosters.firstOrNull { it.id.key == id }
+
+    @JvmStatic
     fun getActiveBoosters() = registeredBoosters.filter { it.active != null }
 
     @JvmStatic
@@ -39,5 +46,17 @@ object RegisteredBoosters {
             if (!activatedBooster.isExpired()) continue
             booster.deactivateBooster()
         }
+    }
+
+    override fun clear(plugin: LibreforgePlugin) {
+        registeredBoosters.clear()
+    }
+
+    override fun acceptConfig(
+        plugin: LibreforgePlugin,
+        id: String,
+        config: Config,
+    ) {
+        registeredBoosters.add(Booster(id, config))
     }
 }
