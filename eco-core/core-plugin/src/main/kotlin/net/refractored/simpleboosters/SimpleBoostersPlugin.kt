@@ -10,7 +10,6 @@ import net.refractored.simpleboosters.booster.Booster
 import net.refractored.simpleboosters.booster.RegisteredBoosters
 import net.refractored.simpleboosters.commands.*
 import net.refractored.simpleboosters.libreforge.IsBoosterActive
-import org.bukkit.Bukkit
 import revxrsal.commands.bukkit.BukkitCommandHandler
 
 class SimpleBoostersPlugin : LibreforgePlugin() {
@@ -38,25 +37,23 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
 
         handler.registerBrigadier()
 
+//        val balls =
+//            scheduler.runTimer(5L, 10L) {
+//
+//                RegisteredBoosters.scanBoosters()
+//            }
+
         Conditions.register(IsBoosterActive)
 
         registerGenericHolderProvider {
             RegisteredBoosters.getActiveBoosters().map { SimpleProvidedHolder(it) }
         }
+    }
 
-        Bukkit.getScheduler().runTaskTimer(
-            this,
-            Runnable {
-                for (booster in RegisteredBoosters.getActiveBoosters()) {
-                    val activeBooster = booster.active ?: continue
-                    if (activeBooster.isExpired()) {
-                        booster.deactivateBooster()
-                    }
-                }
-            },
-            0,
-            20,
-        )
+    override fun handleReload() {
+        scheduler.runTimer(5L, 5L) {
+            RegisteredBoosters.scanBoosters()
+        }
     }
 
     override fun handleDisable() {

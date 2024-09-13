@@ -38,6 +38,18 @@ object RegisteredBoosters : ConfigCategory("booster", "boosters") {
         registeredBoosters.remove(booster)
     }
 
+    /**
+     * Scan boosters for expiry, and deactivate them if they are expired.
+     */
+    fun scanBoosters()  {
+        for (booster in RegisteredBoosters.getActiveBoosters()) {
+            val activeBooster = booster.active ?: continue
+            if (activeBooster.isExpired()) {
+                booster.deactivateBooster()
+            }
+        }
+    }
+
     @JvmStatic
     fun getBoosterById(id: String): Booster? = registeredBoosters.firstOrNull { it.id.key == id }
 
