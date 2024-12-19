@@ -13,7 +13,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission
 class CancelBoosterCommand {
     @CommandPermission("simpleboosters.admin.start")
     @Description("Starts a booster")
-    @Command("simpleboosters start")
+    @Command("simpleboosters cancel")
     fun execute(
         actor: BukkitCommandActor,
         booster: Booster,
