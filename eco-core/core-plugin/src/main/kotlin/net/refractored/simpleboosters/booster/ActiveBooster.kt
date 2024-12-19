@@ -29,8 +29,15 @@ data class ActiveBooster(
 
     fun getRemainingDuration(): Duration = Duration.ofMillis(getRemainingMillis())
 
+    val bossbar: BoosterBossbar?
+
     init {
         booster.SavedExpireTime = length.toDouble()
+        bossbar = if (booster.config.getBool("commands.enabled")){
+            BoosterBossbar(this)
+        } else {
+            null
+        }
     }
 
     /**

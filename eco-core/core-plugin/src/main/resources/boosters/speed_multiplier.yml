@@ -11,6 +11,13 @@ conditions: [ ]
 messages:
   activation: "%booster_name% <reset>has been activated!"
   deactivation: "%booster_name% <reset>has expired!"
+bossbar:
+  enabled: true
+    # The color of the bossbar.
+  color: "BLUE"
+    # The style of the bossbar.
+  style: "SOLID"
+  title: "2.0x Speed Multiplier %hours%h %minutes%m %seconds%s"
 # What commands to run on activation or deactivation.
 # Do not add a "/" in front of the command.
 commands:

@@ -4,7 +4,6 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 import java.time.Duration
-import java.util.*
 
 object RegisteredBoosters : ConfigCategory("booster", "boosters") {
     /**
@@ -40,10 +39,12 @@ object RegisteredBoosters : ConfigCategory("booster", "boosters") {
 
     /**
      * Scan boosters for expiry, and deactivate them if they are expired.
+     * This also updates any bossbars, if one exists.
      */
-    fun scanBoosters() {
+    fun updateBoosters() {
         for (booster in getActiveBoosters()) {
             val activeBooster = booster.active ?: continue
+            activeBooster.bossbar?.updateBossbar()
             if (activeBooster.isExpired()) {
                 booster.deactivateBooster()
             }

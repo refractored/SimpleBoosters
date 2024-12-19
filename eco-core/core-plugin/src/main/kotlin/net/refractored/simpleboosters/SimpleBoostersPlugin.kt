@@ -11,6 +11,7 @@ import net.refractored.simpleboosters.booster.RegisteredBoosters
 import net.refractored.simpleboosters.commands.*
 import net.refractored.simpleboosters.exceptions.CommandErrorHandler
 import net.refractored.simpleboosters.libreforge.IsBoosterActive
+import net.refractored.simpleboosters.listeners.OnPlayerJoin
 import revxrsal.commands.bukkit.BukkitCommandHandler
 
 class SimpleBoostersPlugin : LibreforgePlugin() {
@@ -26,7 +27,7 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
 
         handler = BukkitCommandHandler.create(this)
 
-        handler.setExceptionHandler(CommandErrorHandler())
+        handler.exceptionHandler = CommandErrorHandler()
 
         val boosterResolver = BoosterResolver()
 
@@ -37,10 +38,13 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
         handler.register(ReloadCommand())
         handler.register(StartBoosterCommand())
         handler.register(BoosterInfoCommand())
+        handler.register(CancelBoosterCommand())
 
         handler.registerBrigadier()
 
         Conditions.register(IsBoosterActive)
+
+        server.pluginManager.registerEvents(OnPlayerJoin(), this)
 
         registerGenericHolderProvider {
             RegisteredBoosters.getActiveBoosters().map { SimpleProvidedHolder(it) }
@@ -49,7 +53,7 @@ class SimpleBoostersPlugin : LibreforgePlugin() {
 
     override fun handleReload() {
         scheduler.runTimer(5L, 5L) {
-            RegisteredBoosters.scanBoosters()
+            RegisteredBoosters.updateBoosters()
         }
     }
 

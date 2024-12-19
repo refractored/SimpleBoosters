@@ -79,8 +79,9 @@ class Booster(
 
     fun deactivateBooster() {
         active ?: throw IllegalStateException("Booster is not active.")
+        active?.bossbar?.deactivateBossbar()
         Bukkit.broadcast(
-            config.getString("messages.deactivation").replace("%booster_name%", name).miniToComponent(),
+            config.getString("messages.expiry").replace("%booster_name%", name).miniToComponent(),
         )
         for (commandString in config.getStrings("commands.deactivate")) {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), commandString)
