@@ -18,19 +18,19 @@ class CancelBoosterCommand {
         actor: BukkitCommandActor,
         booster: Booster,
     ) {
-        if (booster.active != null) {
+        if (booster.active == null) {
             actor.reply(
                 SimpleBoostersPlugin.instance.langYml
-                    .getStringPrefixed("messages.already-active")
+                    .getStringPrefixed("messages.not-active")
                     .replace("%booster%", booster.name)
                     .miniToComponent(),
             )
             return
         }
-        booster.activateBooster()
+        booster.deactivateBooster()
         actor.reply(
             SimpleBoostersPlugin.instance.langYml
-                .getStringPrefixed("messages.started-booster")
+                .getStringPrefixed("messages.ended-booster")
                 .replace("%booster%", booster.name)
                 .miniToComponent(),
         )
